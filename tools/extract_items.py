@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Extract canonical vanilla Minecraft item IDs for the latest stable Java release."""
+"""Extract canonical vanilla Minecraft Java datasets for the latest stable release."""
 
 from __future__ import annotations
 
@@ -18,10 +18,24 @@ from typing import Any
 VERSION_MANIFEST_URL = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json"
 MIRROR_VERSIONS_URL = "https://raw.githubusercontent.com/misode/mcmeta/summary/versions/data.json"
 MIRROR_ITEM_DEFINITIONS_URL = "https://raw.githubusercontent.com/misode/mcmeta/summary/assets/item_definition/data.json"
+MIRROR_REGISTRIES_URL = "https://raw.githubusercontent.com/misode/mcmeta/summary/registries/data.json"
+MIRROR_COMMANDS_URL = "https://raw.githubusercontent.com/misode/mcmeta/summary/commands/data.json"
 
 
 class ExtractionError(RuntimeError):
     """Raised when extraction cannot complete."""
+
+
+def ensure_namespaced_ids(raw_ids: list[Any]) -> list[str]:
+    ids: list[str] = []
+    for raw_id in raw_ids:
+        if not isinstance(raw_id, str):
+            continue
+        if ":" in raw_id:
+            ids.append(raw_id)
+        else:
+            ids.append(f"minecraft:{raw_id}")
+    return sorted(set(ids))
 
 
 def fetch_json(url: str) -> Any:
@@ -149,11 +163,51 @@ def parse_mirror_items() -> list[str]:
     if not isinstance(payload, dict):
         raise ExtractionError("Unexpected format in mirror item definitions")
 
-    item_ids = [f"minecraft:{key}" for key in payload.keys() if isinstance(key, str)]
+    item_ids = ensure_namespaced_ids([key for key in payload.keys() if isinstance(key, str)])
     if not item_ids:
         raise ExtractionError("No item IDs found in mirror item definitions")
 
-    return sorted(set(item_ids))
+    return item_ids
+
+
+def parse_mirror_registries() -> dict[str, list[str]]:
+    payload = fetch_json(MIRROR_REGISTRIES_URL)
+    if not isinstance(payload, dict):
+        raise ExtractionError("Unexpected format in mirror registries")
+
+    registry_keys: dict[str, str] = {
+        "biomes": "worldgen/biome",
+        "blocks": "block",
+        "entity_types": "entity_type",
+        "enchantments": "enchantment",
+        "damage_types": "damage_type",
+        "dimension_types": "dimension_type",
+    }
+
+    parsed: dict[str, list[str]] = {}
+    for dataset_name, registry_key in registry_keys.items():
+        values = payload.get(registry_key)
+        if not isinstance(values, list):
+            raise ExtractionError(f"Mirror registry '{registry_key}' missing or not a list")
+        parsed[dataset_name] = ensure_namespaced_ids(values)
+
+    return parsed
+
+
+def parse_mirror_commands() -> list[str]:
+    payload = fetch_json(MIRROR_COMMANDS_URL)
+    if not isinstance(payload, dict):
+        raise ExtractionError("Unexpected format in mirror commands payload")
+
+    children = payload.get("children")
+    if not isinstance(children, dict):
+        raise ExtractionError("Mirror commands payload does not expose root children")
+
+    command_names = [name for name in children.keys() if isinstance(name, str)]
+    if not command_names:
+        raise ExtractionError("No commands found in mirror commands payload")
+
+    return sorted(set(command_names))
 
 
 def extract_items() -> tuple[list[str], str, str]:
@@ -180,21 +234,33 @@ def extract_items() -> tuple[list[str], str, str]:
         return items, release_id, "mirror-item_definition"
 
 
-def write_outputs(items: list[str], mc_version: str, source: str, output_dir: Path) -> None:
+def write_dataset_outputs(output_dir: Path, dataset_name: str, values: list[str]) -> None:
+    dataset_json_path = output_dir / f"{dataset_name}.json"
+    dataset_txt_path = output_dir / f"{dataset_name}.txt"
+    dataset_json_path.write_text(json.dumps(values, indent=2) + "\n", encoding="utf-8")
+    dataset_txt_path.write_text("\n".join(values) + "\n", encoding="utf-8")
+
+
+def write_outputs(
+    datasets: dict[str, list[str]],
+    mc_version: str,
+    sources: dict[str, str],
+    output_dir: Path,
+) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    items_json_path = output_dir / "items.json"
-    items_txt_path = output_dir / "items.txt"
     version_json_path = output_dir / "version.json"
 
-    items_json_path.write_text(json.dumps(items, indent=2) + "\n", encoding="utf-8")
-    items_txt_path.write_text("\n".join(items) + "\n", encoding="utf-8")
+    for dataset_name, values in sorted(datasets.items()):
+        write_dataset_outputs(output_dir=output_dir, dataset_name=dataset_name, values=values)
+
     version_json_path.write_text(
         json.dumps(
             {
                 "minecraft_release": mc_version,
-                "item_count": len(items),
-                "source": source,
+                "source": "multi-dataset",
+                "sources": sources,
+                "counts": {dataset: len(values) for dataset, values in sorted(datasets.items())},
             },
             indent=2,
         )
@@ -215,13 +281,36 @@ def main() -> int:
     output_dir = Path(args.output_dir)
 
     try:
-        items, mc_version, source = extract_items()
-        write_outputs(items=items, mc_version=mc_version, source=source, output_dir=output_dir)
+        items, mc_version, items_source = extract_items()
+        registry_datasets = parse_mirror_registries()
+        commands = parse_mirror_commands()
+
+        datasets = {"items": items, **registry_datasets, "commands": commands}
+        sources = {
+            "items": items_source,
+            "biomes": "mirror-registries",
+            "blocks": "mirror-registries",
+            "entity_types": "mirror-registries",
+            "enchantments": "mirror-registries",
+            "damage_types": "mirror-registries",
+            "dimension_types": "mirror-registries",
+            "commands": "mirror-commands",
+        }
+
+        write_outputs(
+            datasets=datasets,
+            mc_version=mc_version,
+            sources=sources,
+            output_dir=output_dir,
+        )
     except ExtractionError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
-    print(f"Updated item dataset for Minecraft {mc_version} with {len(items)} items ({source}).")
+    print(
+        f"Updated Minecraft {mc_version} datasets: "
+        + ", ".join(f"{name}={len(values)}" for name, values in sorted(datasets.items()))
+    )
     return 0
 
 

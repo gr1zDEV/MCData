@@ -1,5 +1,24 @@
 {
   "minecraft_release": "26.1.1",
-  "item_count": 1523,
-  "source": "mirror-item_definition"
+  "source": "multi-dataset",
+  "sources": {
+    "items": "mirror-item_definition",
+    "biomes": "mirror-registries",
+    "blocks": "mirror-registries",
+    "entity_types": "mirror-registries",
+    "enchantments": "mirror-registries",
+    "damage_types": "mirror-registries",
+    "dimension_types": "mirror-registries",
+    "commands": "mirror-commands"
+  },
+  "counts": {
+    "biomes": 65,
+    "blocks": 1177,
+    "commands": 91,
+    "damage_types": 50,
+    "dimension_types": 4,
+    "enchantments": 43,
+    "entity_types": 160,
+    "items": 1523
+  }
 }
