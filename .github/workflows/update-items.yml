@@ -1,4 +1,4 @@
-name: Update vanilla Minecraft item IDs
+name: Update vanilla Minecraft datasets
 
 on:
   schedule:
@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: update-minecraft-items
+  group: update-minecraft-datasets
   cancel-in-progress: false
 
 jobs:
@@ -33,18 +33,18 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Extract vanilla item IDs
+      - name: Extract vanilla datasets
         run: python tools/extract_items.py
 
       - name: Commit and push changes
         run: |
-          if git diff --quiet -- data/items.json data/items.txt data/version.json; then
+          if git diff --quiet -- data/items.json data/items.txt data/biomes.json data/biomes.txt data/blocks.json data/blocks.txt data/entity_types.json data/entity_types.txt data/enchantments.json data/enchantments.txt data/damage_types.json data/damage_types.txt data/dimension_types.json data/dimension_types.txt data/commands.json data/commands.txt data/version.json; then
             echo "No changes detected; skipping commit."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/items.json data/items.txt data/version.json
-          git commit -m "chore(data): update vanilla Minecraft item IDs"
+          git add data/items.json data/items.txt data/biomes.json data/biomes.txt data/blocks.json data/blocks.txt data/entity_types.json data/entity_types.txt data/enchantments.json data/enchantments.txt data/damage_types.json data/damage_types.txt data/dimension_types.json data/dimension_types.txt data/commands.json data/commands.txt data/version.json
+          git commit -m "chore(data): update vanilla Minecraft datasets"
           git push
