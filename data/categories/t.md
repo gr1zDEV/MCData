@@ -1,0 +1,46 @@
+# Category: t
+
+Total items: **42**
+
+- `minecraft:tadpole_bucket`
+- `minecraft:tadpole_spawn_egg`
+- `minecraft:tall_dry_grass`
+- `minecraft:tall_grass`
+- `minecraft:target`
+- `minecraft:terracotta`
+- `minecraft:test_block`
+- `minecraft:test_instance_block`
+- `minecraft:tide_armor_trim_smithing_template`
+- `minecraft:tinted_glass`
+- `minecraft:tipped_arrow`
+- `minecraft:tnt`
+- `minecraft:tnt_minecart`
+- `minecraft:torch`
+- `minecraft:torchflower`
+- `minecraft:torchflower_seeds`
+- `minecraft:totem_of_undying`
+- `minecraft:trader_llama_spawn_egg`
+- `minecraft:trapped_chest`
+- `minecraft:trial_key`
+- `minecraft:trial_spawner`
+- `minecraft:trident`
+- `minecraft:tripwire_hook`
+- `minecraft:tropical_fish`
+- `minecraft:tropical_fish_bucket`
+- `minecraft:tropical_fish_spawn_egg`
+- `minecraft:tube_coral`
+- `minecraft:tube_coral_block`
+- `minecraft:tube_coral_fan`
+- `minecraft:tuff`
+- `minecraft:tuff_brick_slab`
+- `minecraft:tuff_brick_stairs`
+- `minecraft:tuff_brick_wall`
+- `minecraft:tuff_bricks`
+- `minecraft:tuff_slab`
+- `minecraft:tuff_stairs`
+- `minecraft:tuff_wall`
+- `minecraft:turtle_egg`
+- `minecraft:turtle_helmet`
+- `minecraft:turtle_scute`
+- `minecraft:turtle_spawn_egg`
+- `minecraft:twisting_vines`

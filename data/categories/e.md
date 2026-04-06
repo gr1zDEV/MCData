@@ -1,0 +1,48 @@
+# Category: e
+
+Total items: **44**
+
+- `minecraft:echo_shard`
+- `minecraft:egg`
+- `minecraft:elder_guardian_spawn_egg`
+- `minecraft:elytra`
+- `minecraft:emerald`
+- `minecraft:emerald_block`
+- `minecraft:emerald_ore`
+- `minecraft:enchanted_book`
+- `minecraft:enchanted_golden_apple`
+- `minecraft:enchanting_table`
+- `minecraft:end_crystal`
+- `minecraft:end_portal_frame`
+- `minecraft:end_rod`
+- `minecraft:end_stone`
+- `minecraft:end_stone_brick_slab`
+- `minecraft:end_stone_brick_stairs`
+- `minecraft:end_stone_brick_wall`
+- `minecraft:end_stone_bricks`
+- `minecraft:ender_chest`
+- `minecraft:ender_dragon_spawn_egg`
+- `minecraft:ender_eye`
+- `minecraft:ender_pearl`
+- `minecraft:enderman_spawn_egg`
+- `minecraft:endermite_spawn_egg`
+- `minecraft:evoker_spawn_egg`
+- `minecraft:experience_bottle`
+- `minecraft:explorer_pottery_sherd`
+- `minecraft:exposed_chiseled_copper`
+- `minecraft:exposed_copper`
+- `minecraft:exposed_copper_bars`
+- `minecraft:exposed_copper_bulb`
+- `minecraft:exposed_copper_chain`
+- `minecraft:exposed_copper_chest`
+- `minecraft:exposed_copper_door`
+- `minecraft:exposed_copper_golem_statue`
+- `minecraft:exposed_copper_grate`
+- `minecraft:exposed_copper_lantern`
+- `minecraft:exposed_copper_trap`
+- `minecraft:exposed_copper_trapdoor`
+- `minecraft:exposed_cut_copper`
+- `minecraft:exposed_cut_copper_slab`
+- `minecraft:exposed_cut_copper_stairs`
+- `minecraft:exposed_lightning_rod`
+- `minecraft:eye_armor_trim_smithing_template`
