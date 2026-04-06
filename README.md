@@ -23,17 +23,18 @@ If Mojang endpoints are temporarily unreachable in an execution environment, the
 
 - `data/items.json` — pretty-printed JSON array of item IDs.
 - `data/items.txt` — one item ID per line.
+- `data/items.md` — markdown master list generated from `data/items.json`.
+- `data/categories/*.md` — generated category markdown lists (bucketed by first character after `minecraft:`).
 - `data/version.json` — release metadata for the current dataset snapshot.
 
 ## Automation (GitHub Actions)
 
-Workflow: `.github/workflows/update-items.yml`
+Workflows:
 
-- Runs daily on a schedule.
-- Supports manual runs via `workflow_dispatch`.
-- Uses concurrency to prevent overlapping update jobs.
-- Uses GitHub-hosted `ubuntu-latest` runners.
-- Commits and pushes only when dataset files change.
+- `.github/workflows/update-items.yml` updates raw dataset files (if present in your branch).
+- `.github/workflows/sync-categories.yml` regenerates `data/items.md` and `data/categories/*.md` whenever the master list changes.
+
+The category sync workflow can also be run manually with `workflow_dispatch`, and commits only when generated markdown changes.
 
 ## Run locally
 
@@ -46,9 +47,10 @@ Run:
 
 ```bash
 python tools/extract_items.py
+python tools/sync_categories.py
 ```
 
-This updates files under `data/`.
+This updates files under `data/`, including the markdown master and categorized lists.
 
 ## Notes / caveats
 

@@ -1,0 +1,25 @@
+# Category: j
+
+Total items: **21**
+
+- `minecraft:jack_o_lantern`
+- `minecraft:jigsaw`
+- `minecraft:jukebox`
+- `minecraft:jungle_boat`
+- `minecraft:jungle_button`
+- `minecraft:jungle_chest_boat`
+- `minecraft:jungle_door`
+- `minecraft:jungle_fence`
+- `minecraft:jungle_fence_gate`
+- `minecraft:jungle_hanging_sign`
+- `minecraft:jungle_leaves`
+- `minecraft:jungle_log`
+- `minecraft:jungle_planks`
+- `minecraft:jungle_pressure_plate`
+- `minecraft:jungle_sapling`
+- `minecraft:jungle_shelf`
+- `minecraft:jungle_sign`
+- `minecraft:jungle_slab`
+- `minecraft:jungle_stairs`
+- `minecraft:jungle_trapdoor`
+- `minecraft:jungle_wood`
