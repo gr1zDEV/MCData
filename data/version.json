@@ -12,13 +12,13 @@
     "commands": "mirror-commands"
   },
   "counts": {
-    "biomes": 66,
-    "blocks": 1195,
+    "biomes": 65,
+    "blocks": 1168,
     "commands": 91,
     "damage_types": 50,
     "dimension_types": 4,
     "enchantments": 43,
-    "entity_types": 158,
-    "items": 1535
+    "entity_types": 157,
+    "items": 1506
   }
 }
