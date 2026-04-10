@@ -1,5 +1,5 @@
 {
-  "minecraft_release": "26.1.1",
+  "minecraft_release": "26.1.2",
   "source": "multi-dataset",
   "sources": {
     "items": "mirror-item_definition",
@@ -12,13 +12,13 @@
     "commands": "mirror-commands"
   },
   "counts": {
-    "biomes": 65,
-    "blocks": 1168,
+    "biomes": 66,
+    "blocks": 1195,
     "commands": 91,
     "damage_types": 50,
     "dimension_types": 4,
     "enchantments": 43,
-    "entity_types": 157,
-    "items": 1506
+    "entity_types": 158,
+    "items": 1535
   }
 }
