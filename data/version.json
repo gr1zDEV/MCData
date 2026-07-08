@@ -13,12 +13,12 @@
   },
   "counts": {
     "biomes": 67,
-    "blocks": 1253,
-    "commands": 92,
+    "blocks": 1254,
+    "commands": 93,
     "damage_types": 51,
     "dimension_types": 4,
     "enchantments": 43,
-    "entity_types": 160,
-    "items": 1593
+    "entity_types": 161,
+    "items": 1610
   }
 }
